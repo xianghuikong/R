@@ -1,0 +1,21 @@
+
+
+library(ggplot2)
+library(ggpubr)
+otu<-read.csv("D:\\app\\OneDrive\\桌面\\CDS_Genome.csv")
+fit<-lm(otu$size~otu$CDS, data = otu)
+summary(fit)
+genome_size<- factor(otu$size)
+library(RColorBrewer)
+color2<- colorRampPalette(brewer.pal(6,"Reds"))#选择一种即可
+ggplot(otu,aes(x=otu$CDS,y=otu$size),size=6)+#x,y参数
+  geom_point(size=3,color="#87CEFA")+
+  scale_colour_gradientn(colours =color2(100))+#颜色梯度，可更改
+  geom_smooth(aes(), method = 'lm', se = TRUE) +
+  theme_bw()+labs(y="Size(bp)",x="CDS number",size=8)+
+  theme(axis.text=element_text(colour='black',size=8),axis.text.x = element_text(size = 8, angle = 45, hjust = 1),axis.text.y = element_text(size = 8, angle = 45, hjust = 1))+
+  annotate('text', label = 'R2=0.9472; p<0.001', x =2000, y = 8000000, size =5,color="black")
+
+
+
+
